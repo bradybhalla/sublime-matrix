@@ -3,6 +3,7 @@ import sublime_plugin
 
 import pathlib
 
+
 def parseMatrix(s):
     """Returns nested float list from a string"""
     try:
