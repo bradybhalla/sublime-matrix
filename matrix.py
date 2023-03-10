@@ -108,8 +108,7 @@ class MatrixopCommand(sublime_plugin.TextCommand):
             self.format(edit)
         elif operation == "help":
             path = pathlib.Path(__file__).parent.resolve()
-            print(path)
-            self.view.run_command("open_file", "path")
+            self.view.run_command("open_file", "{}/Matrix-help.md".format(path))
 
     def add(self, edit):
         """Add the two selected matrices"""
