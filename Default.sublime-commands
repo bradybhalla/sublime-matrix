@@ -35,7 +35,7 @@
         "args": {"operation": "format"}
     },
     {
-        "caption": "Matrix: Help",
+        "caption": "Matrix: Helppp",
         "command": "open_file",
         "args": {"file": "${packages}/sublime-matrix-calculator/Matrix-help.md"}
     }
