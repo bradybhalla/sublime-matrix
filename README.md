@@ -11,6 +11,7 @@ A matrix calculator for Sublime Text
 ### Manual install
 1. Clone this repository
 2. Move to `~/Library/Application Support/Sublime Text/Packages`
+3. Restart Sublime Text
 
 ## Usage
 Type `Matrix: Help` into the Command Palette for usage information
