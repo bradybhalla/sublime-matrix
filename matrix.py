@@ -1,6 +1,8 @@
 import sublime
 import sublime_plugin
 
+import pathlib
+
 
 def parseMatrix(s):
     """Returns nested float list from a string"""
@@ -104,6 +106,10 @@ class MatrixopCommand(sublime_plugin.TextCommand):
             self.rref(edit)
         elif operation == "format":
             self.format(edit)
+        elif operation == "help":
+            path = pathlib.Path(__file__).parent.resolve()
+            print(path)
+            self.view.run_command("open_file", name="")
 
     def add(self, edit):
         """Add the two selected matrices"""

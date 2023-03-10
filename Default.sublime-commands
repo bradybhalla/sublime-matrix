@@ -36,7 +36,7 @@
     },
     {
         "caption": "Matrix: Help",
-        "command": "open_file",
-        "args": {"file": "${packages}/sublime-matrix-calculator/Matrix-help.md"}
+        "command": "matrixop",
+        "args": {"operation": "help"}
     }
 ]
