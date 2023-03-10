@@ -110,7 +110,7 @@ class MatrixopCommand(sublime_plugin.TextCommand):
         elif operation == "format":
             self.format(edit)
         elif operation == "help":
-            path = pathlib.Path(__file__).parent.resolve()
+            path = str(pathlib.Path(__file__).parent.resolve())
             self.displayError(path)
             self.view.run_command("open_file", {"file":"{}/Matrix-help.md".format(path)})
 
