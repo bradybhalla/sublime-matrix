@@ -1,0 +1,42 @@
+[
+    {
+        "caption": "Matrix: Add (+)",
+        "command": "matrixop",
+        "args": {"operation": "add"}
+    },
+    {
+        "caption": "Matrix: Multiply (*)",
+        "command": "matrixop",
+        "args": {"operation": "mult"}
+    },
+    {
+        "caption": "Matrix: Scale",
+        "command": "matrixop",
+        "args": {"operation": "scale"}
+    },
+    {
+        "caption": "Matrix: Transpose (T)",
+        "command": "matrixop",
+        "args": {"operation": "transpose"}
+    },
+    {
+        "caption": "Matrix: Inverse (-1)",
+        "command": "matrixop",
+        "args": {"operation": "inv"}
+    },
+    {
+        "caption": "Matrix: RREF",
+        "command": "matrixop",
+        "args": {"operation": "rref"}
+    },
+    {
+        "caption": "Matrix: Format",
+        "command": "matrixop",
+        "args": {"operation": "format"}
+    },
+    {
+        "caption": "Matrix: Help",
+        "command": "open_file",
+        "args": {"file": "${packages}/Matrix/Matrix-help.md"}
+    }
+]
