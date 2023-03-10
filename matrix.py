@@ -35,6 +35,9 @@ def isValidMatrix(m):
             if not isinstance(el, float):
                 return -1
 
+    if rows == 0 or cols == 0:
+        return -1
+
     return (rows, cols)
 
 
@@ -108,6 +111,7 @@ class MatrixopCommand(sublime_plugin.TextCommand):
             self.format(edit)
         elif operation == "help":
             path = pathlib.Path(__file__).parent.resolve()
+            print(patha)
             self.view.run_command("open_file", {"file":"{}/Matrix-help.md".format(path)})
 
     def add(self, edit):
