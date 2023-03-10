@@ -3,11 +3,13 @@
 A matrix has columns split by " " and rows split by "\n".
 
 Example:
-1 0 0 0
-0 1 0 0
-0 0 1 0
+1 2 0 0
+0 1 2 0
+0 0 1 2
 0 0 0 1
 
+## Usage
+Select one or more matrices and perform an operation.
 
 ## Operations (using command palette)
   - Add (+)
