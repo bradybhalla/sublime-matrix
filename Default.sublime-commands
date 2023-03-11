@@ -35,6 +35,11 @@
         "args": {"operation": "format"}
     },
     {
+        "caption": "Matrix: Insert",
+        "command": "matrixop",
+        "args": {"operation": "insert"}
+    },
+    {
         "caption": "Matrix: Help",
         "command": "matrixop",
         "args": {"operation": "help"}

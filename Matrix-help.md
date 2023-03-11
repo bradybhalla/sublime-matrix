@@ -19,6 +19,7 @@ Select one or more matrices and perform an operation.
   - Inverse (-1)
   - RREF
   - Format
+  - Insert
   - Help (open this document)
 
 Note: When two matrices are used in an operation, the matrix with lower line number is put first.

@@ -109,6 +109,8 @@ class MatrixopCommand(sublime_plugin.TextCommand):
             self.rref(edit)
         elif operation == "format":
             self.format(edit)
+        elif operation == "insert":
+            self.insert(edit)
         elif operation == "help":
             path = str(pathlib.Path(__file__).parent.resolve())
             self.view.window().open_file("{}/Matrix-help.md".format(path))
@@ -281,3 +283,7 @@ class MatrixopCommand(sublime_plugin.TextCommand):
             return
 
         writeMatrix(self.view, edit, self.view.sel()[0], A)
+
+    def insert(self, edit):
+        self.view.window().show_input_panel(
+            "Rows", "3", self.insert2, None, None)
