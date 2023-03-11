@@ -61,7 +61,7 @@ def matrixToStr(m):
     for row in m:
         stringArr.append([])
         for el in row:
-            stringArr[-1].append(str(round(el, 2)) if int(el)
+            stringArr[-1].append(str(round(el, 4)) if int(el)
                                  != el else str(int(el)))
 
     colSize = [max([len(stringArr[j][i])+1 for j in range(len(m))])
@@ -111,6 +111,8 @@ class MatrixopCommand(sublime_plugin.TextCommand):
             self.format(edit)
         elif operation == "insert":
             self.insert(edit)
+        elif operation == "make_insert":
+            self.makeInsert(edit)
         elif operation == "help":
             path = str(pathlib.Path(__file__).parent.resolve())
             self.view.window().open_file("{}/Matrix-help.md".format(path))
@@ -234,14 +236,21 @@ class MatrixopCommand(sublime_plugin.TextCommand):
             self.displayError("Matrix must be square")
             return
 
-        # build A | I
-        # row reduce
-        # check if we have I | B
-        # write B
+        I = [[1 if i == j else 0 for j in range(
+            dimA[0])] for i in range(dimA[0])]
+        B = [A[i] + I[i] for i in range(dimA[0])]
+        self._rref(B, [dimA[0], dimA[0]*2])
 
-        # TODO
+        newI = [B[i][:dimA[0]] for i in range(dimA[0])]
+        A_inv = [B[i][dimA[0]:] for i in range(dimA[0])]
 
-        writeMatrix(self.view, edit, self.view.sel()[0], [[-1]])
+        for i in range(dimA[0]):
+            for j in range(dimA[0]):
+                if newI[i][j] != (1 if i == j else 0):
+                    self.displayError("Matrix is not invertible")
+                    return
+
+        writeMatrix(self.view, edit, self.view.sel()[0], A_inv)
 
     def rref(self, edit):
         """Row reduce the selected matrix"""
@@ -256,18 +265,40 @@ class MatrixopCommand(sublime_plugin.TextCommand):
             self.displayError("Invalid input")
             return
 
-        # use _rref
+        self._rref(A, dimA)
 
-        # TODO
+        writeMatrix(self.view, edit, self.view.sel()[0], A)
 
-        writeMatrix(self.view, edit, self.view.sel()[0], [[1]])
-
-    def _rref(self, m):
+    def _rref(self, A, dim):
         """Perform row reduction"""
 
-        # TODO
+        h = 0
+        k = 0
+        while h < dim[0] and k < dim[1]:
+            pivot_row = 0
+            pivot_val = -1
+            for i in range(h, dim[0]):
+                if abs(A[i][k]) > pivot_val:
+                    pivot_row = i
+                    pivot_val = A[i][k]
 
-        pass
+            if pivot_val == 0:
+                k += 1
+                continue
+
+            A[h], A[pivot_row] = A[pivot_row], A[h]
+            A[h] = [i/pivot_val for i in A[h]]
+
+            for i in range(dim[0]):
+                if i == h:
+                    continue
+                f = A[i][k]
+                A[i][k] = 0
+                for j in range(k+1, dim[1]):
+                    A[i][j] = A[i][j] - A[h][j]*f
+
+            h += 1
+            k += 1
 
     def format(self, edit):
         """Format the selected matrix"""
@@ -285,5 +316,53 @@ class MatrixopCommand(sublime_plugin.TextCommand):
         writeMatrix(self.view, edit, self.view.sel()[0], A)
 
     def insert(self, edit):
-        self.view.window().show_input_panel(
-            "Rows", "3", self.insert2, None, None)
+        if len(self.view.sel()) > 1:
+            self.displayError("Too many cursors")
+            return
+        sel = self.view.sel()[0]
+        span = sublime.Region(self.view.line(sel.begin()).begin(), sel.end())
+        text = self.view.substr(span)
+        rows, cols = [int(i) for i in text.split("x")]
+        snippet = ""
+        for i in range(rows):
+            for j in range(cols):
+                snippet += "${{{}:0}} ".format(i*cols + j + 1)
+            snippet += "\n"
+        snippet += "$0"
+        self.view.erase(edit, span)
+        self.view.run_command("insert_snippet", {"contents": snippet})
+
+    def makeInsert(self, edit):
+        if len(self.view.sel()) > 1:
+            self.displayError("Too many cursors")
+            return
+        sel = self.view.sel()[0]
+        if len(self.view.sel()[0]) > 0:
+            self.displayError("Nothing should be selected")
+            return
+        if self.view.lines(sel)[0].begin() != sel.begin():
+            self.view.insert(edit, self.view.sel()[0].begin(), "\n")
+        self._getInputAndInsert(edit)
+
+    def _getInputAndInsert(self, edit):
+        self._editStore = edit
+        self.view.window().show_input_panel("Rows", "", self._getCols, None, None)
+
+    def _getCols(self, rows):
+        self._rowsStore = rows
+        self.view.window().show_input_panel("Cols", "", self._andInsert, None, None)
+
+    def _andInsert(self, cols):
+        edit = self._editStore
+        try:
+            rows = int(self._rowsStore)
+            cols = int(cols)
+        except ValueError:
+            self.displayError("Invalid input")
+        snippet = ""
+        for i in range(rows):
+            for j in range(cols):
+                snippet += "${{{}:0}} ".format(i*cols + j + 1)
+            snippet += "\n"
+        snippet += "$0"
+        self.view.run_command("insert_snippet", {"contents": snippet})

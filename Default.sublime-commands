@@ -37,7 +37,7 @@
     {
         "caption": "Matrix: Insert",
         "command": "matrixop",
-        "args": {"operation": "insert"}
+        "args": {"operation": "make_insert"}
     },
     {
         "caption": "Matrix: Help",

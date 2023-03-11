@@ -4,13 +4,12 @@
         "keys": ["tab"],
         "command": "matrixop",
         "args": {
-            "operation": "transpose"
-        }
+            "operation": "insert"
+        },
         "context": [
             { "key": "selection_empty", "operator": "equal", "operand": "true", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_match", "operand": "\\d+x\\d+", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_match", "operand": "^\\d+x\\d+", "match_all": true },
         ]
     }
 
 ]
-

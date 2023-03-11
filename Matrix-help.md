@@ -9,7 +9,8 @@ Example:
 0 0 0 1
 
 ## Usage
-Select one or more matrices and perform an operation.
+  - Use multiple selections to choose matrices and perform an operation.
+  - To quickly insert a matrix, type `<rows>x<cols>` and press `tab`
 
 ## Operations (using command palette)
   - Add (+)
@@ -28,3 +29,4 @@ Note: Inverse and RREF may not be accurate due to floating point precision.
 
 ## Helpful shortcuts
   - Hold ⌘ for multiple selections
+  - Hold ⌥ for rectangular selections (will make operations fail, but useful for copy/paste)
