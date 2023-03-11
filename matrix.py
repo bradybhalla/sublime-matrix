@@ -316,6 +316,10 @@ class MatrixopCommand(sublime_plugin.TextCommand):
         writeMatrix(self.view, edit, self.view.sel()[0], A)
 
     def insert(self, edit):
+        """Insert a new matrix
+
+        Assumes the current line only contains &lt;rows&gt;x&lt;cols&gt; with the cursor at the end
+        """
         if len(self.view.sel()) > 1:
             self.displayError("Too many cursors")
             return
@@ -333,6 +337,11 @@ class MatrixopCommand(sublime_plugin.TextCommand):
         self.view.run_command("insert_snippet", {"contents": snippet})
 
     def makeInsert(self, edit):
+        """Insert a new matrix
+
+        Make a new line if needed and ask for user input
+        """
+
         if len(self.view.sel()) > 1:
             self.displayError("Too many cursors")
             return
@@ -345,14 +354,17 @@ class MatrixopCommand(sublime_plugin.TextCommand):
         self._getInputAndInsert(edit)
 
     def _getInputAndInsert(self, edit):
+        """Helper method for `makeInsert`"""
         self._editStore = edit
         self.view.window().show_input_panel("Rows", "", self._getCols, None, None)
 
     def _getCols(self, rows):
+        """Helper method for `makeInsert`"""
         self._rowsStore = rows
         self.view.window().show_input_panel("Cols", "", self._andInsert, None, None)
 
     def _andInsert(self, cols):
+        """Helper method for `makeInsert`"""
         edit = self._editStore
         try:
             rows = int(self._rowsStore)
@@ -366,3 +378,5 @@ class MatrixopCommand(sublime_plugin.TextCommand):
             snippet += "\n"
         snippet += "$0"
         self.view.run_command("insert_snippet", {"contents": snippet})
+ 
+
