@@ -114,7 +114,7 @@ class MatrixopCommand(sublime_plugin.TextCommand):
         elif operation == "make_insert":
             self.makeInsert(edit)
         elif operation == "help":
-            self.view.window().new_html_sheet("""
+            self.view.window().new_html_sheet("Matrix Calculator Help", """
 <h1 id="matrix">Matrix</h1>
 <p>A matrix has columns split by &quot; &quot; and rows split by &quot;\n&quot;.</p>
 <p>Example:</p>
@@ -146,7 +146,7 @@ Note: Inverse and RREF may not be accurate due to floating point precision.</p>
 <li>Hold ⌘ for multiple selections</li>
 <li>Hold ⌥ for rectangular selections (will make operations fail, but useful for copy/paste)</li>
 </ul>
-""", f.read())
+""")
 
     def add(self, edit):
         """Add the two selected matrices"""
