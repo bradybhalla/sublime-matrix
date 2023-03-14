@@ -114,7 +114,7 @@ class MatrixopCommand(sublime_plugin.TextCommand):
         elif operation == "make_insert":
             self.makeInsert(edit)
         elif operation == "help":
-            with open("help.html", "r") as f:
+            with open(str(pathlib.Path(__file__).parent.resolve()) + "help.html", "r") as f:
                 self.view.window().new_html_sheet("Matrix Calculator Help", f.read())
 
     def add(self, edit):
