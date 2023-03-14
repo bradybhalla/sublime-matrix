@@ -114,14 +114,13 @@ class MatrixopCommand(sublime_plugin.TextCommand):
         elif operation == "make_insert":
             self.makeInsert(edit)
         elif operation == "help":
-            self.view.window().new_html_sheet("Matrix Calculator Help", """
-<h1 id="matrix">Matrix</h1>
-<p>A matrix has columns split by &quot; &quot; and rows split by &quot;\n&quot;.</p>
-<p>Example:</p>
-<p>1 2 0 0</p>
-<p>0 1 2 0</p>
-<p>0 0 1 2</p>
-<p>0 0 0 1</p>
+            self.view.window().new_html_sheet("Matrix Calculator Help", """<h1 id="matrix-calculator">Matrix Calculator</h1>
+<p>A matrix has columns split by &quot; &quot; and rows split by &quot;\\n&quot;.</p>
+<p>Example: <br>
+1 2 0 0 <br>
+0 1 2 0 <br>
+0 0 1 2 <br>
+0 0 0 1</p>
 <h2 id="usage">Usage</h2>
 <ul>
 <li>Use multiple selections to choose matrices and perform an operation.</li>
@@ -139,8 +138,8 @@ class MatrixopCommand(sublime_plugin.TextCommand):
 <li>Insert</li>
 <li>Help (open this document)</li>
 </ul>
-<p>Note: When two matrices are used in an operation, the matrix with lower line number is put first.
-Note: Inverse and RREF may not be accurate due to floating point precision.</p>
+<p>Note: When two matrices are used in an operation, the matrix with lower line number is put first.</p>
+<p>Note: Inverse and RREF may not be accurate due to floating point precision.</p>
 <h2 id="helpful-shortcuts">Helpful shortcuts</h2>
 <ul>
 <li>Hold ⌘ for multiple selections</li>
