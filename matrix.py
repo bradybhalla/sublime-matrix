@@ -114,8 +114,39 @@ class MatrixopCommand(sublime_plugin.TextCommand):
         elif operation == "make_insert":
             self.makeInsert(edit)
         elif operation == "help":
-            with open(str(pathlib.Path(__file__).parent.resolve()) + "/help.html", "r") as f:
-                self.view.window().new_html_sheet("Matrix Calculator Help", f.read())
+            self.view.window().new_html_sheet("""
+<h1 id="matrix">Matrix</h1>
+<p>A matrix has columns split by &quot; &quot; and rows split by &quot;\n&quot;.</p>
+<p>Example:</p>
+<p>1 2 0 0</p>
+<p>0 1 2 0</p>
+<p>0 0 1 2</p>
+<p>0 0 0 1</p>
+<h2 id="usage">Usage</h2>
+<ul>
+<li>Use multiple selections to choose matrices and perform an operation.</li>
+<li>To quickly insert a matrix, type <code>&lt;rows&gt;x&lt;cols&gt;</code> and press <code>tab</code></li>
+</ul>
+<h2 id="operations-using-command-palette-">Operations (using command palette)</h2>
+<ul>
+<li>Add (+)</li>
+<li>Multiply (*)</li>
+<li>Scale</li>
+<li>Transpose (T)</li>
+<li>Inverse (-1)</li>
+<li>RREF</li>
+<li>Format</li>
+<li>Insert</li>
+<li>Help (open this document)</li>
+</ul>
+<p>Note: When two matrices are used in an operation, the matrix with lower line number is put first.
+Note: Inverse and RREF may not be accurate due to floating point precision.</p>
+<h2 id="helpful-shortcuts">Helpful shortcuts</h2>
+<ul>
+<li>Hold ⌘ for multiple selections</li>
+<li>Hold ⌥ for rectangular selections (will make operations fail, but useful for copy/paste)</li>
+</ul>
+""", f.read())
 
     def add(self, edit):
         """Add the two selected matrices"""
@@ -378,5 +409,3 @@ class MatrixopCommand(sublime_plugin.TextCommand):
             snippet += "\n"
         snippet += "$0"
         self.view.run_command("insert_snippet", {"contents": snippet})
- 
-
